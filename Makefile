@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Wextra -Iinclude -std=c++11 -O2
+CFLAGS = -Wall -Wextra -Iinclude -std=c++17 -O2
 LDFLAGS = `sdl2-config --libs --cflags` -Ofast -lm 
 
 BUILD_DIR = build
@@ -21,23 +21,23 @@ include src.mk
 
 OBJS = $(patsubst src/%.cpp, $(OBJS_DIR)/%.o, $(SRCS))
 
-all: fractal
+all: projet
 
 $(OBJS_DIR)/%.o: src/%.cpp Makefile
 	@$(PRECOMPILE)
 	$(CC) $(CFLAGS) -c -o $@ $<
 	@$(POSTCOMPILE)
 
-fractal: $(OBJS_GAME) $(OBJS)
+projet: $(OBJS_GAME) $(OBJS)
 
-fractal:
+projet:
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 clean:
 	rm -rf build
 
 fclean: clean
-	rm -rf fractal
+	rm -rf projet
 
 re:
 	$(MAKE) fclean
