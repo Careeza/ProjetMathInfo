@@ -1,7 +1,6 @@
-#ifndef TIMER_H
+#ifndef TIMER_HPP
 
-# define TIMER_H
-
+# define TIMER_HPP
 
 # include <SDL2/SDL.h>
 # include <SDL2/SDL_timer.h>

@@ -1,10 +1,10 @@
-#ifndef PROJET_H
+#ifndef PROJET_HPP
 
-# define PROJET_H
+# define PROJET_HPP
 
 # include <SDL2/SDL.h>
 # include <SDL2/SDL_timer.h>
-# include "timer.h"
+# include "timer.hpp"
 
 # if SDL_BYTEORDER == SDL_BIG_ENDIAN
     #define rmask 0xff000000
