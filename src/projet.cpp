@@ -1,20 +1,19 @@
 #include "projet.hpp"
 #include "point.hpp"
+#include "polynome.hpp"
 #include <iostream>
 
-void    loop(SDL_Renderer *render)
+void    loop(Screen& screen)
 {
-    auto bezierPoints = generateBezierPoint({0, 0}, {0, 1}, 5);
-    bool close_requested = false;
-    Timer timer;
+    auto    bezierPoints = generateBezierPoints({0, 0}, {1, 0}, 5);
+    bool    close_requested = false;
+    Timer   fps;
+    Timer   timer; 
 
-    for (int i = 0; i < bezierPoints.size() - 1; i++) {
-        SDL_RenderDrawLine(render, bezierPoints[i].getX(), bezierPoints[i].getY(),
-                                    bezierPoints[i + 1].getX(), bezierPoints[i + 1].getY());
-    }
+    timer.start();
     while (!close_requested)
     {
-        timer.start();
+        fps.start();
 
         SDL_Event event;
         while (SDL_PollEvent(&event))
@@ -42,23 +41,37 @@ void    loop(SDL_Renderer *render)
                     break;
             }
         }
-        SDL_Delay(fmax(0, (1000 / 30) - timer.get_ticks()));
+        if (timer.get_ticks() >= 10000) {
+            timer.start();
+        }
+        SDL_SetRenderDrawColor(screen.render, 0, 0, 0, 255);
+        SDL_RenderClear(screen.render);
+        SDL_SetRenderDrawColor(screen.render, 0, 255, 0, 255);
+        drawLines(screen, bezierPoints);
+        auto nextP = bezierPoints;
+        double t = timer.get_ticks() / 10000.0;
+        while (nextP.size() >= 2) {
+            SDL_SetRenderDrawColor(screen.render, bezierPoints.size() / static_cast<double>(nextP.size()) * 255, 42, (1.0 - bezierPoints.size() / static_cast<double>(nextP.size())) * 255, 255);
+            nextP = generateNextPoints(nextP, t);
+            drawLines(screen, nextP);
+        }
+        SDL_RenderPresent(screen.render);
+        SDL_Delay(fmax(0, (1000 / 30) - fps.get_ticks()));
     }
 }
 
 
 int     main()
 {
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
-    // SDL_Window *window = SDL_CreateWindow("Ant", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, 0); // => Creation fenetre SDL
-    SDL_Window *window = SDL_CreateWindow("Bezier", 0, 0, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_ALLOW_HIGHDPI);
-    SDL_Renderer *render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
-    
-    loop(render);
+    // Screen  screen;
+    Poly    p1{{3, 2}};
+    Poly    p2 = p1 * p1;
 
-    SDL_DestroyRenderer(render);
-    SDL_DestroyWindow(window);
+    std::cout << p1 << std::endl;
+    std::cout << p2 << std::endl;
+    std::cout << p2(0) << std::endl;
+    // screen.createVirtualScreen({0, 1}, {1, -1});
+    // loop(screen);
 
     return (0);
 }
