@@ -1,9 +1,11 @@
 #ifndef POLYNOME_HPP
 
-# define POINT_HPP
+# define POLYNOME_HPP
 
+#include "point.hpp"
 #include <vector>
 #include <iostream>
+#include <tuple>
 
 class Poly {
 	/*
@@ -26,6 +28,8 @@ class Poly {
 		std::vector<double>	coefs_;
 };
 
+Poly	puissance(const Poly& p, const int& a);
 std::ostream& operator<<(std::ostream &os, const Poly &p);
+std::tuple<Poly, Poly>	BezierPoly(std::vector<Point<double>> points);
 
 #endif

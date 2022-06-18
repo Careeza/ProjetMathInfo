@@ -1,5 +1,6 @@
 #include "point.hpp"
 #include <vector>
+#include <iostream>
 #include <random>
 #include <algorithm>
 
@@ -15,7 +16,9 @@ std::vector<Point<double>>  generateBezierPoints(Point<double> p1, Point<double>
         points.push_back({distr_x(eng), distr_y(eng)});
     }
     points.push_back(p2);
+    std::cout << " ?? " << std::endl;
     std::sort(points.begin(), points.end());
+    std::cout << " ???? " << std::endl;
     return (points);
 }
 

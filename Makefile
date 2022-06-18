@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Wextra -Iinclude -std=c++17 -O2
+CFLAGS = -Wall -Wextra -Iinclude -std=c++17 -g -fsanitize=address
 LDFLAGS = `sdl2-config --libs --cflags` -Ofast -lm 
 
 BUILD_DIR = build

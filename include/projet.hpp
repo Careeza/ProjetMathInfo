@@ -6,6 +6,7 @@
 # include <SDL2/SDL_timer.h>
 # include "timer.hpp"
 # include "point.hpp"
+# include "polynome.hpp"
 
 struct  Screen {
     SDL_Window		*window;
@@ -45,9 +46,9 @@ struct  Screen {
 		Point<int> p_(ratioX * window_w, ratioY * window_h);
 		return (p_);
 	};
-	SDL_Point	convPointSDL(Point<double> p) { 
-		double	ratioX = (p.getX() - virtualUL.getX()) / virtual_w;
-		double	ratioY = -(p.getY() - virtualUL.getY()) / virtual_h;
+	SDL_Point	convPointSDL(Point<double> p, double scale = 1) { 
+		double	ratioX = (p.getX() - virtualUL.getX()) / (virtual_w * scale);
+		double	ratioY = -(p.getY() - virtualUL.getY()) / (virtual_h * scale);
 		SDL_Point p_ = {static_cast<int>(ratioX * window_w), static_cast<int>(ratioY * window_h)};
 		return (p_);
 	};
@@ -55,7 +56,10 @@ struct  Screen {
 };
 
 void	drawLine(Screen& screen, Point<double> p1, Point<double> p2);
-void	drawLines(Screen& screen, std::vector<Point<double>> points);
+void	drawLines(Screen& screen, std::vector<Point<double>>& points);
+void	drawPoly(Screen& screen, Poly& px, Poly& py, double maxT);
+void	drawPoint(Screen& screen, SDL_Point point, int size = 1);
+
 
 # if SDL_BYTEORDER == SDL_BIG_ENDIAN
     #define rmask 0xff000000

@@ -19,10 +19,10 @@ Point<T>::~Point() {}
 
 template <class T>
 bool    Point<T>::operator<(const Point<T>& p) const {
-	return (this->x_ <= p.x_);
+	return (this->x_ < p.x_);
 }
 
 template <class T>
 bool    Point<T>::operator>(const Point<T>& p) const {
-	return (this->x_ >= p.x_);
+	return (this->x_ > p.x_);
 }
