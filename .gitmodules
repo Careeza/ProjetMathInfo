@@ -1,0 +1,3 @@
+[submodule "SDL_gfx"]
+	path = SDL_gfx
+	url = https://github.com/ferzkopp/SDL_gfx.git
