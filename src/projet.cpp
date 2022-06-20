@@ -1,8 +1,11 @@
+#include "draw.hpp"
 #include "projet.hpp"
 #include "point.hpp"
 #include "polynome.hpp"
 #include "mathBonus.hpp"
+#include "screen.hpp"
 #include <iostream>
+#include <vector>
 #include <tuple>
 
 void    loop(Screen& screen)
@@ -80,14 +83,7 @@ void    loop(Screen& screen)
 int     main()
 {
     Screen  screen;
-    // Poly    p1{{3, 2}};
-    // Poly    p2 = p1 * p1;
-    // std::cout << Poly{1, 1} << std::endl;
-    // std::cout << puissance(Poly{{1, 0}}, 3) << std::endl;
 
-    // std::cout << p1 << std::endl;
-    // std::cout << p2 << std::endl;
-    // std::cout << p2(0) << std::endl;
     screen.createVirtualScreen({0, 1}, {1, -1});
     loop(screen);
 
