@@ -1,7 +1,7 @@
 #include "mathBonus.hpp"
 
-int fact(int n) {
-    int res = 1;
+double  fact(int n) {
+    double  res = 1;
 
     while (n > 1) {
         res *= n;
@@ -10,6 +10,6 @@ int fact(int n) {
     return (res);
 }
 
-int	comb(int k, int n) {
+double  comb(int k, int n) {
     return (fact(n) / (fact(k) * fact(n - k)));
 }

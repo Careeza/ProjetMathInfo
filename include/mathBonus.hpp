@@ -4,7 +4,7 @@
 
 # include <cmath>
 
-int fact(int n);
-int	comb(int k, int n);
+double  fact(int n);
+double	comb(int k, int n);
 
 #endif

@@ -7,7 +7,7 @@
 
 void    loop(Screen& screen)
 {
-    auto    bezierPoints = generateBezierPoints({0, 0}, {1, 0}, 20);
+    auto    bezierPoints = generateBezierPoints({0, 0}, {1, 0}, 30);
     bool    close_requested = false;
     Timer   fps;
     Timer   timer; 
