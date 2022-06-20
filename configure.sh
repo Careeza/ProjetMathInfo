@@ -2,7 +2,27 @@ mkdir boostInc
 mkdir boostLib
 mkdir boost
 
-./boost_1_79_0/bootstrap.sh --prefix=/mnt/nfs/homes/fbecerri/ProjetMathInfo/boost --libdir=/mnt/nfs/homes/fbecerri/ProjetMathInfo/boostLib --includedir=/mnt/nfs/homes/fbecerri/ProjetMathInfo/boostInc
-./boost_1_79_0/b2
+BOOSTDIR=$PWD/boost
+BOOSTLIB=$PWD/boostLib
+BOOSTINC=$PWD/boostInc
 
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mnt/nfs/homes/fbecerri/ProjetMathInfo/boostLib/
+cd boost_1_79_0
+
+# ./bootstrap.sh --prefix=$BOOSTDIR --libdir=$BOOSTLIB --includedir=$BOOSTINC
+# ./b2 install
+
+cd ..
+
+# LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BOOSTLIB
+
+mkdir SDLLib
+mkdir SDLInc
+
+SDLDIR=$PWD/SDL
+SDLINC=$PWD/SDLInc
+SDLLIB=$PWD/SDLLib
+
+echo $PWD
+
+
+
