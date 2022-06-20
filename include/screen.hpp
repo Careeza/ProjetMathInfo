@@ -17,6 +17,7 @@ struct  Screen {
 	Point<double>	virtualDR;
 	double			virtual_w;
 	double			virtual_h;
+	double			ratio;
 	Screen(bool fullScreen = true);
 	~Screen();
 	void	createVirtualScreen(Point<double> virtualUL, Point<double> virtualDR);

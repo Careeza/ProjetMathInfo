@@ -2,10 +2,10 @@
 
 # define POLYNOME_HPP
 
-#include "point.hpp"
-#include <vector>
-#include <iostream>
-#include <tuple>
+# include "point.hpp"
+# include <vector>
+# include <iostream>
+# include <tuple>
 
 class Poly {
 	/*

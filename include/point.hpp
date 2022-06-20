@@ -2,8 +2,8 @@
 
 # define POINT_HPP
 
-#include <vector>
-#include <iostream>
+# include <vector>
+# include <iostream>
 
 template <class T>
 class Point {

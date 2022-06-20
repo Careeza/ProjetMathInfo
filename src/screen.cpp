@@ -13,6 +13,7 @@ Screen::Screen(bool fullScreen) {
 	render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
 	SDL_GL_GetDrawableSize(window, &window_w, &window_h);
+	ratio = window_w / static_cast<double>(window_h);
 }
 Screen::~Screen() {
 	SDL_DestroyRenderer(render);
