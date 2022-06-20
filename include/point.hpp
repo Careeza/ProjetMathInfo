@@ -28,9 +28,6 @@ class Point {
 std::ostream& operator<<(std::ostream &os, const Point<double> &p);
 std::ostream& operator<<(std::ostream &os, const Point<int> &p);
 
-std::vector<Point<double>>  generateBezierPoints(Point<double> p1, Point<double> p2, int n, double y_min = -1, double y_max = 1);
-std::vector<Point<double>>  generateNextPoints(std::vector<Point<double>> p, double time);
-
 #include "point.tpp"
 
 #endif

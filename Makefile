@@ -1,6 +1,6 @@
 CC = g++
-CFLAGS = -Wall -Wextra -Iinclude -std=c++17 -Ofast
-LDFLAGS = `sdl2-config --libs --cflags` -Ofast -lm 
+CFLAGS = -Wall -Wextra -Iinclude -I/opt/homebrew/include -std=c++17 -g -fsanitize=address
+LDFLAGS = `sdl2-config --libs --cflags` -Ofast -lm -L/opt/homebrew/lib -lboost_program_options
 
 BUILD_DIR = build
 OBJS_DIR = $(BUILD_DIR)/objs

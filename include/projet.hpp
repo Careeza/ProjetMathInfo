@@ -11,7 +11,8 @@
 # include "polynome.hpp"
 # include "screen.hpp"
 
-void    loop(Screen& screen);
+void    bezierCurveLoop();
+void    lissajousCurveLoop();
 
 # if SDL_BYTEORDER == SDL_BIG_ENDIAN
     #define rmask 0xff000000
