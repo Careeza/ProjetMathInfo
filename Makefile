@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Wextra -Iinclude -IboostInc -std=c++17 -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Iinclude -IboostInc -std=c++17 -Ofast
 LDFLAGS = `sdl2-config --libs --cflags` -Ofast -lm -LboostLib -lboost_program_options
 
 BUILD_DIR = build

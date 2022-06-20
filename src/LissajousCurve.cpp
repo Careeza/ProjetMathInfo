@@ -62,7 +62,7 @@ void    lissajousCurveLoop() {
         SDL_SetRenderDrawColor(screen.render, 255, 255, 255, 255);
         SDL_RenderClear(screen.render);
         SDL_SetRenderDrawColor(screen.render, 0, 0, 255, 255);
-        lissajousPlot.plot(screen, -boost::math::constants::pi<double>(), boost::math::constants::pi<double>());
+        lissajousPlot.plot(screen, -boost::math::constants::pi<double>(), boost::math::constants::pi<double>(), 5);
         SDL_RenderPresent(screen.render);
         SDL_Delay(fmax(0, (1000 / 30) - fps.get_ticks()));
     }

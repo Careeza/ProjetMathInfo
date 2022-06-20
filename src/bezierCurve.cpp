@@ -108,7 +108,7 @@ void    bezierCurveLoop() {
         SDL_Point p = screen.convPointSDL(nextP[0]);
         drawPoint(screen, p, 15);
         SDL_SetRenderDrawColor(screen.render, 0, 0, 255, 255);
-        bezierPlot.plot(screen, 0, t);
+        bezierPlot.plot(screen, 0, t, 7);
         SDL_RenderPresent(screen.render);
         SDL_Delay(fmax(0, (1000 / 30) - fps.get_ticks()));
     }
