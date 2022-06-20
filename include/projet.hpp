@@ -4,6 +4,8 @@
 
 # include <SDL2/SDL.h>
 # include <SDL2/SDL_timer.h>
+# include <vector>
+# include "draw.hpp"
 # include "timer.hpp"
 # include "point.hpp"
 # include "polynome.hpp"

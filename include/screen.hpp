@@ -3,7 +3,7 @@
 # define SCREEN_HPP
 
 # include "point.hpp"
-# include "polynome.hpp"
+// # include "polynome.hpp"
 
 # include <SDL2/SDL.h>
 # include <SDL2/SDL_timer.h>

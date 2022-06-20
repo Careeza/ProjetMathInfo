@@ -4,23 +4,34 @@
 #include "polynome.hpp"
 #include "mathBonus.hpp"
 #include "screen.hpp"
+#include "parametricPlot.hpp"
 #include <iostream>
 #include <vector>
 #include <tuple>
 
-void    loop(Screen& screen)
-{
-    auto    bezierPoints = generateBezierPoints({0, 0}, {1, 0}, 30);
-    bool    close_requested = false;
-    Timer   fps;
-    Timer   timer; 
+PPlot   bezierCurvePlot(std::vector<Point<double>> bezierPoints) {
     Poly    px;
     Poly    py;
-    bool    showAlgo = true;
 
     std::tie(px, py) = BezierPoly(bezierPoints);
-    std::cout << py << std::endl;
-    std::cout << px << std::endl;
+	return (PPlot{std::bind( &Poly::operator(), px, std::placeholders::_1), std::bind( &Poly::operator(), py, std::placeholders::_1 )});
+}
+
+PPlot	Lizajou(int m, int n)
+{
+	PPlot	p(static_cast<double(*)(double)>(sin), static_cast<double(*)(double)>(cos));
+	return (p);
+}
+
+void    loop(Screen& screen) {
+    std::vector<Point<double>>  bezierPoints = generateBezierPoints({0, 0}, {1, 0}, 30);
+    bool    close_requested = false;
+    Timer   fps;
+    Timer   timer;
+	PPlot	bezierPlot(bezierCurvePlot(bezierPoints));
+
+    bool    showAlgo = true;
+
     timer.start();
     while (!close_requested)
     {
@@ -53,12 +64,13 @@ void    loop(Screen& screen)
                     break;
             }
         }
-        if (timer.get_ticks() >= 10000) {
+        double t = timer.get_ticks() / 10000.0;
+        if (t >= 1.0) {
             timer.start();
+            t = 0;
         }
         SDL_SetRenderDrawColor(screen.render, 255, 255, 255, 255);
         SDL_RenderClear(screen.render);
-        double t = timer.get_ticks() / 10000.0;
         SDL_SetRenderDrawColor(screen.render, 0, 255, 0, 255);
         if (showAlgo)
             drawLines(screen, bezierPoints);
@@ -73,7 +85,7 @@ void    loop(Screen& screen)
         SDL_Point p = screen.convPointSDL(nextP[0]);
         drawPoint(screen, p, 15);
         SDL_SetRenderDrawColor(screen.render, 0, 0, 255, 255);
-        drawPoly(screen, px, py, t);
+        bezierPlot.plot(screen, 0, t);
         SDL_RenderPresent(screen.render);
         SDL_Delay(fmax(0, (1000 / 30) - fps.get_ticks()));
     }

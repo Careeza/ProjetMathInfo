@@ -1,4 +1,5 @@
 #include "screen.hpp"
+#include <vector>
 
 Screen::Screen(bool fullScreen) {
 	virtualDR = {1, -1};

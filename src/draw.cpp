@@ -11,7 +11,7 @@ void	drawLine(Screen& screen, Point<double> p1, Point<double> p2) {
 	SDL_RenderDrawLine(screen.render, p1_.getX(), p1_.getY(), p2_.getX(), p2_.getY());
 }
 
-void	drawLines(Screen& screen, std::vector<Point<double>>& points) {
+void	drawLines(Screen& screen, const std::vector<Point<double>>& points) {
 	std::vector<SDL_Point>	pointsSDL;
 	
 	for (Point<double> p : points) {
