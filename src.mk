@@ -1,6 +1,6 @@
-SRCS += src/LissajousCurve.cpp
 SRCS += src/bezierCurve.cpp
 SRCS += src/draw.cpp
+SRCS += src/LissajousCurve.cpp
 SRCS += src/mathBonus.cpp
 SRCS += src/parametricPlot.cpp
 SRCS += src/point.cpp

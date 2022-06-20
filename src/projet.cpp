@@ -23,7 +23,7 @@ int     main(int argc, char **argv)
     try {
         po::store(po::parse_command_line(argc, argv, desc), vm);
     	po::notify(vm);
-	} catch(po::unknown_option unknown) {
+	} catch(po::unknown_option const & unknown) {
 		std::cout << "Unknown option: " << unknown.get_option_name() << std::endl;
 		std::cerr << desc;
 		return (1);

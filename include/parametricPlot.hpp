@@ -8,7 +8,7 @@
 class PPlot {
 	public:
 		PPlot(std::function<double(double)> xt, std::function<double(double)> yt);
-		void	plot(Screen &screen, double tStart, double tEnd);
+		void	plot(Screen &screen, double tStart, double tEnd, int size = 1);
 	private:
 		std::function<double(double)>	xt_;
 		std::function<double(double)>	yt_;
