@@ -13,6 +13,7 @@
 
 void    bezierCurveLoop();
 void    lissajousCurveLoop();
+bool	handleEvent(Timer& timer, std::function<void(Screen& screen)> f1, std::function<void(Screen& screen)> f2, Screen& screen);
 
 # if SDL_BYTEORDER == SDL_BIG_ENDIAN
     #define rmask 0xff000000

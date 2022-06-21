@@ -1,9 +1,11 @@
 SRCS += src/bezierCurve.cpp
 SRCS += src/draw.cpp
+SRCS += src/event.cpp
 SRCS += src/LissajousCurve.cpp
 SRCS += src/mathBonus.cpp
 SRCS += src/parametricPlot.cpp
 SRCS += src/point.cpp
+SRCS += src/polygone.cpp
 SRCS += src/polynome.cpp
 SRCS += src/projet.cpp
 SRCS += src/screen.cpp
