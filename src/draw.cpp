@@ -4,33 +4,33 @@
 #include "polynome.hpp"
 #include <vector>
 
-void	drawLine(Screen& screen, Point<double> p1, Point<double> p2) {
+void	drawLine(VirtualScreen& screen, Point<double> p1, Point<double> p2) {
 	Point<int>	p1_ = screen.convPoint(p1);
 	Point<int>	p2_ = screen.convPoint(p2);
 
-	SDL_RenderDrawLine(screen.render, p1_.getX(), p1_.getY(), p2_.getX(), p2_.getY());
+	SDL_RenderDrawLine(screen.getRenderer(), p1_.getX(), p1_.getY(), p2_.getX(), p2_.getY());
 }
 
-void	drawLines(Screen& screen, const std::vector<Point<double>>& points) {
+void	drawLines(VirtualScreen& screen, const std::vector<Point<double>>& points) {
 	std::vector<SDL_Point>	pointsSDL;
 	
 	for (Point<double> p : points) {
 		pointsSDL.push_back(screen.convPointSDL(p));
 	}
-	SDL_RenderDrawLines(screen.render, &pointsSDL[0], pointsSDL.size());
+	SDL_RenderDrawLines(screen.getRenderer(), &pointsSDL[0], pointsSDL.size());
 }
 
-void	drawPoly(Screen& screen, Poly& px, Poly& py, double maxT)
+void	drawPoly(VirtualScreen& screen, Poly& px, Poly& py, double maxT)
 {
 	for (double t = 0; t <= maxT; t+= 0.0001) {
 		double x = px(t);
 		double y = py(t);
 		SDL_Point point = screen.convPointSDL({x, y});
-		SDL_RenderDrawPoint(screen.render, point.x, point.y);
+		SDL_RenderDrawPoint(screen.getRenderer(), point.x, point.y);
 	}
 }
 
-void	drawPoint(Screen& screen, SDL_Point point, int size) {
+void	drawPoint(VirtualScreen& screen, SDL_Point point, int size) {
 	std::vector<SDL_Point>	points;
 
 	points.push_back(point);
@@ -39,5 +39,5 @@ void	drawPoint(Screen& screen, SDL_Point point, int size) {
 			points.push_back({point.x + i - size / 2, point.y + j - size / 2});
 		}
 	}
-	SDL_RenderDrawPoints(screen.render, &points[0], points.size());
+	SDL_RenderDrawPoints(screen.getRenderer(), &points[0], points.size());
 }

@@ -7,15 +7,12 @@ import feature ;
 # Compiler configuration. This definition will be used unless
 # you already have defined some toolsets in your user-config.jam
 # file.
-if ! gcc in [ feature.values <toolset> ]
+if ! clang in [ feature.values <toolset> ]
 {
-    using gcc ; 
+    using clang ; 
 }
 
-project : default-build <toolset>gcc ;
-
-path-constant ICU_PATH : /usr ;
-
+project : default-build <toolset>clang ;
 
 # List of --with-<library> and --without-<library>
 # options. If left empty, all libraries will be built.
@@ -25,10 +22,10 @@ libraries =  ;
 
 # These settings are equivalent to corresponding command-line
 # options.
-option.set prefix : /mnt/nfs/homes/fbecerri/ProjetMathInfo/boost ;
-option.set exec-prefix : /mnt/nfs/homes/fbecerri/ProjetMathInfo/boost ;
-option.set libdir : /mnt/nfs/homes/fbecerri/ProjetMathInfo/boostLib ;
-option.set includedir : /mnt/nfs/homes/fbecerri/ProjetMathInfo/boostInc ;
+option.set prefix : /Users/fredericbecerril/projet/ProjetMathInfo/boost ;
+option.set exec-prefix : /Users/fredericbecerril/projet/ProjetMathInfo/boost ;
+option.set libdir : /Users/fredericbecerril/projet/ProjetMathInfo/boostLib ;
+option.set includedir : /Users/fredericbecerril/projet/ProjetMathInfo/boostInc ;
 
 # Stop on first error
 option.set keep-going : false ;

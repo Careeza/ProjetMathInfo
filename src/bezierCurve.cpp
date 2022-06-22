@@ -10,7 +10,7 @@
 #include <tuple>
 #include <random>
 
-std::vector<Point<double>>  generateBezierPoints(Point<double> p1, Point<double> p2, int n, double y_min = -1, double y_max = 1) {
+std::vector<Point<double>>  generateBezierPoints(Point<double> p1, Point<double> p2, int n, double y_min, double y_max) {
     std::vector<Point<double>>  points;
     std::random_device rd;
     std::default_random_engine eng(rd());
@@ -22,9 +22,7 @@ std::vector<Point<double>>  generateBezierPoints(Point<double> p1, Point<double>
         points.push_back({distr_x(eng), distr_y(eng)});
     }
     points.push_back(p2);
-    std::cout << " ?? " << std::endl;
     std::sort(points.begin(), points.end());
-    std::cout << " ???? " << std::endl;
     return (points);
 }
 
@@ -46,15 +44,17 @@ PPlot   bezierCurvePlot(std::vector<Point<double>> bezierPoints) {
 }
 
 void    bezierCurveLoop() {
-    Screen  screen;
-   std::vector<Point<double>>  bezierPoints = generateBezierPoints({0, 0}, {1, 0}, 30);
+    Screen  S;
+
+    VirtualScreen   screen(S, Flag::full);
+    screen.createPlan({0, 1}, {1, -1});
+    std::vector<Point<double>>  bezierPoints = generateBezierPoints({0, 0}, {1, 0}, 10);
     bool    close_requested = false;
     Timer   fps;
     Timer   timer;
 	PPlot	bezierPlot(bezierCurvePlot(bezierPoints));
 
     bool    showAlgo = true;
-    screen.createVirtualScreen({0, 1}, {1, -1});
     timer.start();
     while (!close_requested)
     {
@@ -92,24 +92,25 @@ void    bezierCurveLoop() {
             timer.start();
             t = 0;
         }
-        SDL_SetRenderDrawColor(screen.render, 255, 255, 255, 255);
-        SDL_RenderClear(screen.render);
-        SDL_SetRenderDrawColor(screen.render, 0, 255, 0, 255);
+        screen.startDraw();
+        SDL_SetRenderDrawColor(screen.getRenderer(), 255, 255, 255, 255);
+        SDL_RenderClear(screen.getRenderer());
+        SDL_SetRenderDrawColor(screen.getRenderer(), 0, 255, 0, 255);
         if (showAlgo)
             drawLines(screen, bezierPoints);
         auto nextP = bezierPoints;
         while (nextP.size() >= 2) {
-            SDL_SetRenderDrawColor(screen.render, bezierPoints.size() / static_cast<double>(nextP.size()) * 255, 42, (1.0 - bezierPoints.size() / static_cast<double>(nextP.size())) * 255, 255);
+            SDL_SetRenderDrawColor(screen.getRenderer(), bezierPoints.size() / static_cast<double>(nextP.size()) * 255, 42, (1.0 - bezierPoints.size() / static_cast<double>(nextP.size())) * 255, 255);
             nextP = generateNextPoints(nextP, t);
             if (showAlgo)
                 drawLines(screen, nextP);
         }
-        SDL_SetRenderDrawColor(screen.render, 255, 0, 0, 255);
+        SDL_SetRenderDrawColor(screen.getRenderer(), 255, 0, 0, 255);
         SDL_Point p = screen.convPointSDL(nextP[0]);
         drawPoint(screen, p, 15);
-        SDL_SetRenderDrawColor(screen.render, 0, 0, 255, 255);
+        SDL_SetRenderDrawColor(screen.getRenderer(), 0, 0, 255, 255);
         bezierPlot.plot(screen, 0, t, 3);
-        SDL_RenderPresent(screen.render);
+        screen.renderPresent();
         SDL_Delay(fmax(0, (1000 / 30) - fps.get_ticks()));
     }
 }

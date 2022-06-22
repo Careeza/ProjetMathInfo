@@ -8,9 +8,9 @@
 # include "polynome.hpp"
 # include <vector>
 
-void	drawLine(Screen& screen, Point<double> p1, Point<double> p2);
-void	drawLines(Screen& screen, const std::vector<Point<double>>& points);
-void	drawPoly(Screen& screen, Poly& px, Poly& py, double maxT);
-void	drawPoint(Screen& screen, SDL_Point point, int size = 1);
+void	drawLine(VirtualScreen& screen, Point<double> p1, Point<double> p2);
+void	drawLines(VirtualScreen& screen, const std::vector<Point<double>>& points);
+void	drawPoly(VirtualScreen& screen, Poly& px, Poly& py, double maxT);
+void	drawPoint(VirtualScreen& screen, SDL_Point point, int size = 1);
 
 #endif

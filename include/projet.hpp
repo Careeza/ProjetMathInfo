@@ -12,7 +12,12 @@
 # include "screen.hpp"
 
 void    bezierCurveLoop();
+void    bezierCurveLoopGFX();
 void    lissajousCurveLoop();
+
+std::vector<Point<double>>  generateBezierPoints(Point<double> p1, Point<double> p2, int n, double y_min = -1, double y_max = 1);
+std::vector<Point<double>>  generateNextPoints(std::vector<Point<double>> p, double t);
+
 
 # if SDL_BYTEORDER == SDL_BIG_ENDIAN
     #define rmask 0xff000000

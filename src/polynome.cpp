@@ -4,6 +4,7 @@
 #include <cmath>
 #include <algorithm>
 #include <iostream>
+#include <fstream>
 #include <tuple>
 
 Poly::Poly() {
@@ -16,6 +17,19 @@ Poly::Poly(std::vector<double> coefs) : coefs_(coefs) {
 
 Poly::Poly(size_t deg, double val) : coefs_(deg, val)
 {}
+
+Poly::Poly(std::string file, int c) {
+	std::ifstream	is(file);
+	int				deg;
+	double			val;
+
+	(void)c;
+	is >> deg;
+	for (int i = 0; i < deg; i++) {
+		is >> val;
+		coefs_.push_back(val);
+	}
+}
 
 Poly::~Poly() {
 
@@ -114,4 +128,14 @@ std::tuple<Poly, Poly>	BezierPoly(std::vector<Point<double>> points)
 		py = py + (puissance(Poly{{-1, 1}}, n - 1 - i) * points[i].getY() * puissance(Poly{{1, 0}}, i) * comb(i, n - 1));
 	}
 	return (std::make_tuple(px, py));
+}
+
+
+void	Poly::savePoly(std::string name) {
+	std::ofstream	os(name);
+
+	os << coefs_.size() << " ";
+	for (int i = 0; i < coefs_.size(); i++) {
+		os << coefs_[i] << " ";
+	}
 }

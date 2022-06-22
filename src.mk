@@ -1,6 +1,9 @@
-SRCS += src/bezierCurve.cpp
-SRCS += src/draw.cpp
 SRCS += src/LissajousCurve.cpp
+SRCS += src/SDL2_gfxPrimitives.cpp
+SRCS += src/SDL2_rotozoom.cpp
+SRCS += src/bezierCurve.cpp
+SRCS += src/bezierCurveWithGFX.cpp
+SRCS += src/draw.cpp
 SRCS += src/mathBonus.cpp
 SRCS += src/parametricPlot.cpp
 SRCS += src/point.cpp

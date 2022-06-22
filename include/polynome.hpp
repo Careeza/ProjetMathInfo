@@ -6,6 +6,7 @@
 # include <vector>
 # include <iostream>
 # include <tuple>
+# include <string>
 
 class Poly {
 	/*
@@ -14,6 +15,7 @@ class Poly {
 	*/
 	public:
 		Poly();
+		Poly(std::string file, int c);
 		Poly(size_t deg, double val);
 		Poly(std::vector<double> coefs);
 		~Poly();
@@ -22,6 +24,7 @@ class Poly {
 		Poly	operator+(const double& a) const;
 		Poly	operator+(const Poly& p) const;
 		double	operator()(double x) const;
+		void	savePoly(std::string name);
 		friend std::ostream& operator<<(std::ostream &os, const Poly &p);
 
 	private:

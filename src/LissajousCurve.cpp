@@ -15,8 +15,11 @@ PPlot   lissajousCurvePlot(int m, int n) {
 }
 
 void    lissajousCurveLoop() {
-    Screen  screen;
-    screen.createVirtualScreen({-1.2 * screen.ratio, 1.2}, {1.2 * screen.ratio, -1.2});
+    Screen  S;
+
+
+    VirtualScreen   screen(S, Flag::left);
+    screen.createPlan({-1.4 * screen.getRatio(), 1.4}, {1.4 * screen.getRatio(), -1.4});
 
     bool    close_requested = false;
     Timer   fps;
@@ -59,12 +62,14 @@ void    lissajousCurveLoop() {
         //     timer.start();
         //     t = 0;
         // }
-        SDL_SetRenderDrawColor(screen.render, 255, 255, 255, 255);
-        SDL_RenderClear(screen.render);
-        SDL_SetRenderDrawColor(screen.render, 0, 0, 255, 255);
+        screen.startDraw();
+        SDL_SetRenderDrawColor(screen.getRenderer(), 255, 255, 255, 255);
+        SDL_RenderClear(screen.getRenderer());
+        SDL_SetRenderDrawColor(screen.getRenderer(), 0, 0, 255, 255);
         lissajousPlot.plot(screen, -boost::math::constants::pi<double>(), boost::math::constants::pi<double>(), 5);
         lissajousPlot.showDerivate(screen, t);
-        SDL_RenderPresent(screen.render);
+        screen.renderPresent();
+        // SDL_RenderPresent(screen.getRenderer());
         SDL_Delay(fmax(0, (1000 / 30) - fps.get_ticks()));
     }
 }

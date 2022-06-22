@@ -18,6 +18,7 @@ int     main(int argc, char **argv)
     desc.add_options()
     ("help", "describe arguments")
     ("BCurve", "Launch to see Bezier curve algorithm")
+    ("BCurveGFX", "Launch to see Bezier curve algorithm with GFX")
     ("LCurve", "Launch to see Lissajous curve");
     po::variables_map vm;
     try {
@@ -28,13 +29,15 @@ int     main(int argc, char **argv)
 		std::cerr << desc;
 		return (1);
 	}
-    if (vm.count ("help") || (!vm.count("BCurve") && !vm.count("LCurve"))) {
+    if (vm.count ("help")) {
         std::cerr << desc << "\n";
         return 1;
     }
 
     if (vm.count("BCurve")) {
     	bezierCurveLoop();
+    } else if (vm.count("BCurveGFX")) {
+    	bezierCurveLoopGFX();
     } else if (vm.count("LCurve")) {
 		lissajousCurveLoop();
 	}

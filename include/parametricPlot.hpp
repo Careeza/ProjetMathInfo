@@ -8,8 +8,8 @@
 class PPlot {
 	public:
 		PPlot(std::function<double(double)> xt, std::function<double(double)> yt);
-		void	plot(Screen &screen, double tStart, double tEnd, int size = 1);
-		void	showDerivate(Screen &screen, double t);
+		void	plot(VirtualScreen &screen, double tStart, double tEnd, int size = 1);
+		void	showDerivate(VirtualScreen &screen, double t);
 	private:
 		std::function<double(double)>	xt_;
 		std::function<double(double)>	yt_;
