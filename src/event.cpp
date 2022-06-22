@@ -3,6 +3,11 @@
 #include "projet.hpp"
 #include "timer.hpp"
 
+void	noneFunction(Screen& screen)
+{
+	(void)screen;
+}
+
 bool	handleEvent(Timer& timer, std::function<void(Screen& screen)> f1, std::function<void(Screen& screen)> f2, Screen& screen)
 {
 	bool		close_requested = false;
@@ -27,8 +32,8 @@ bool	handleEvent(Timer& timer, std::function<void(Screen& screen)> f1, std::func
 					case SDLK_b:
 						f2(screen);
 						break;
-					case SDLK_KP_SPACE:
-						if (timer.is_started()) {
+					case SDLK_SPACE:
+						if (!timer.is_paused()) {
 							timer.pause();
 						} else {
 							timer.unpause();
@@ -40,5 +45,5 @@ bool	handleEvent(Timer& timer, std::function<void(Screen& screen)> f1, std::func
 				break;
 		}
 	}
-	return (close_requested);
+	return (!close_requested);
 }

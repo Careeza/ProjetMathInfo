@@ -18,7 +18,8 @@ int     main(int argc, char **argv)
     desc.add_options()
     ("help", "describe arguments")
     ("BCurve", "Launch to see Bezier curve algorithm")
-    ("LCurve", "Launch to see Lissajous curve");
+    ("LCurve", "Launch to see Lissajous curve")
+    ("Polygone", "Launch to see Polygone");
     po::variables_map vm;
     try {
         po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -28,7 +29,7 @@ int     main(int argc, char **argv)
 		std::cerr << desc;
 		return (1);
 	}
-    if (vm.count ("help") || (!vm.count("BCurve") && !vm.count("LCurve"))) {
+    if (vm.count ("help")) {
         std::cerr << desc << "\n";
         return 1;
     }
@@ -37,6 +38,8 @@ int     main(int argc, char **argv)
     	bezierCurveLoop();
     } else if (vm.count("LCurve")) {
 		lissajousCurveLoop();
+	} else if (vm.count("Polygone")) {
+		polygoneLoop();
 	}
 
 

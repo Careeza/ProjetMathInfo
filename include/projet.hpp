@@ -5,6 +5,7 @@
 # include <SDL2/SDL.h>
 # include <SDL2/SDL_timer.h>
 # include <vector>
+# include <functional>
 # include "draw.hpp"
 # include "timer.hpp"
 # include "point.hpp"
@@ -13,7 +14,9 @@
 
 void    bezierCurveLoop();
 void    lissajousCurveLoop();
+void    polygoneLoop();
 bool	handleEvent(Timer& timer, std::function<void(Screen& screen)> f1, std::function<void(Screen& screen)> f2, Screen& screen);
+void	noneFunction(Screen& screen);
 
 # if SDL_BYTEORDER == SDL_BIG_ENDIAN
     #define rmask 0xff000000
