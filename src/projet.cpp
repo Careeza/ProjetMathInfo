@@ -12,6 +12,37 @@
 
 namespace po = boost::program_options;
 
+Info::Info(bool fullScreen) : S(fullScreen), show(true) {}
+
+Info::~Info() {}
+
+void			Info::addVirtualScreen(Flag f) {
+    Vscreens.emplace_back(S, f);
+    screen = &Vscreens.back();
+}
+
+VirtualScreen	*Info::getCurrentScreen() const {
+    return (screen);
+}
+
+void			Info::selectScreen(int index) {
+    screen = &Vscreens[index];
+}
+
+Timer			&Info::getTimer() {
+    return (timer);
+}
+
+void			Info::hideOrShowAlgo(bool show_) {
+    show = show_;
+}
+
+
+bool			Info::showAlgo() const {
+    return (show);
+}
+
+
 int     main(int argc, char **argv)
 {
     po::options_description desc("Allowed options");

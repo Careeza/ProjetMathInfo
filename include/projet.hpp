@@ -12,12 +12,32 @@
 # include "polynome.hpp"
 # include "screen.hpp"
 
+class Info {
+	public:
+		Info(bool fullScreen = true);
+		~Info();
+		void			addVirtualScreen(Flag f);
+		VirtualScreen	*getCurrentScreen() const;
+		void			selectScreen(int index);
+		Timer			&getTimer();
+		void			hideOrShowAlgo(bool show_);
+		bool			showAlgo() const;
+
+	private:
+		Screen  					S;
+		std::vector<VirtualScreen>	Vscreens;
+		VirtualScreen				*screen;
+		Timer						timer;
+		bool						show;
+};
+
 void    bezierCurveLoop();
 void    bezierCurveLoopGFX();
 void    lissajousCurveLoop();
 void    polygoneLoop();
-bool	handleEvent(Timer& timer, std::function<void(Screen& screen)> f1, std::function<void(Screen& screen)> f2, Screen& screen);
-void	noneFunction(Screen& screen);
+bool	handleEvent(std::function<void(Info& info)> f1, std::function<void(Info& info)> f2, Info& info);
+void	noneFunction(Info& info);
+void	hideOrShowAlgo(Info& info);
 
 std::vector<Point<double>>  generateBezierPoints(Point<double> p1, Point<double> p2, int n, double y_min = -1, double y_max = 1);
 std::vector<Point<double>>  generateNextPoints(std::vector<Point<double>> p, double t);

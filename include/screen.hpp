@@ -17,7 +17,8 @@ enum struct Flag {
 };
 
 class  Screen {
-	protected:
+	friend class VirtualScreen;
+	private:
 		SDL_Window		*window;
 		SDL_Renderer	*render;
 		int				window_w;
@@ -35,7 +36,7 @@ class  Screen {
 };
 
 
-class VirtualScreen : public Screen {
+class VirtualScreen {
 	public:
 		VirtualScreen(const Screen &screen, Flag flag);
 		~VirtualScreen();
@@ -48,7 +49,12 @@ class VirtualScreen : public Screen {
 
 		int			getVirtualW() const;
 		int			getVirtualH() const;
+
+		SDL_Renderer	*getRenderer() const;
+		double			getRatio() const;
 	private:
+		const Screen	&S;
+		double			ratio;
 		SDL_Rect		virtualRect;
 		double			planW;
 		double			planH;

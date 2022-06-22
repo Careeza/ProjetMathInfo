@@ -14,7 +14,8 @@ Screen::Screen(bool fullScreen) {
 	ratio = window_w / static_cast<double>(window_h);
 }
 
-Screen::Screen(const Screen &screen) : window(screen.window), render(screen.render), window_w(screen.window_w), window_h(screen.window_h), ratio(screen.ratio) {}
+Screen::Screen(const Screen &screen) : window(screen.window), render(screen.render), window_w(screen.window_w), window_h(screen.window_h), ratio(screen.ratio) {
+}
 
 Screen::~Screen() {
 	SDL_DestroyRenderer(render);
@@ -37,12 +38,12 @@ SDL_Renderer	*Screen::getRenderer() const {
 	return (render);
 }
 
-VirtualScreen::VirtualScreen(const Screen &screen, Flag flag) : Screen(screen) {
+VirtualScreen::VirtualScreen(const Screen &screen, Flag flag) : S(screen) {
 
 	virtualRect.x = 0;
 	virtualRect.y = 0;
-	virtualRect.w = window_w;
-	virtualRect.h = window_h;
+	virtualRect.w = S.window_w;
+	virtualRect.h = S.window_h;
 	if (flag == Flag::up) {
 		virtualRect.h /= 2;
 	} else if (flag == Flag::down) {
@@ -56,7 +57,7 @@ VirtualScreen::VirtualScreen(const Screen &screen, Flag flag) : Screen(screen) {
 		virtualRect.x = virtualRect.w;
 	}
 	ratio = virtualRect.w / static_cast<double>(virtualRect.h);
-	texture = SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, virtualRect.w, virtualRect.h);
+	texture = SDL_CreateTexture(S.render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, virtualRect.w, virtualRect.h);
 
 }
 
@@ -86,15 +87,15 @@ SDL_Point	VirtualScreen::convPointSDL(Point<double> p) {
 }
 
 void		VirtualScreen::startDraw() {
-	SDL_SetRenderTarget(render, texture);
+	SDL_SetRenderTarget(S.render, texture);
 }
 
 void		VirtualScreen::renderPresent() {
-	SDL_SetRenderTarget(render, NULL);
-	SDL_SetRenderDrawColor(render, 0, 0, 0, 255);
-	SDL_RenderClear(render);
-	SDL_RenderCopy(render, texture, NULL, &virtualRect);
-	SDL_RenderPresent(render);
+	SDL_SetRenderTarget(S.render, NULL);
+	SDL_SetRenderDrawColor(S.render, 0, 0, 0, 255);
+	SDL_RenderClear(S.render);
+	SDL_RenderCopy(S.render, texture, NULL, &virtualRect);
+	SDL_RenderPresent(S.render);
 }
 
 int			VirtualScreen::getVirtualW() const {
@@ -103,4 +104,12 @@ int			VirtualScreen::getVirtualW() const {
 
 int			VirtualScreen::getVirtualH() const {
 	return (virtualRect.h);
+}
+
+SDL_Renderer	*VirtualScreen::getRenderer() const {
+	return (S.render);
+}
+
+double			VirtualScreen::getRatio() const {
+	return (ratio);
 }

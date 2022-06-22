@@ -16,25 +16,29 @@ PPlot   lissajousCurvePlot2(int m, int n) {
 
 
 void    polygoneLoop() {
-	Screen	screen;
+    Info	info;
+    VirtualScreen   *screen;
+
+    info.addVirtualScreen(Flag::full);
+    screen = info.getCurrentScreen();
+	screen->createPlan({-1, 1}, {1, -1});
+
     Timer   fps;
-    Timer   timer;
 	PPlot   lissajousPlot(lissajousCurvePlot2(2, 3));
 
-	screen.createVirtualScreen({-1, 1}, {1, -1});
-    timer.start();
-	while (handleEvent(timer, noneFunction, noneFunction, screen))
+	info.getTimer().start();
+	while (handleEvent(noneFunction, noneFunction, info))
 	{
         fps.start();
 
-        double t = timer.get_ticks() / 10000.0;
-		SDL_SetRenderDrawColor(screen.render, 255, 255, 255, 255);
-		SDL_RenderClear(screen.render);
-		SDL_SetRenderDrawColor(screen.render, 0, 0, 255, 255);
-		lissajousPlot.plot(screen, -boost::math::constants::pi<double>(), boost::math::constants::pi<double>(), 5);
-		lissajousPlot.showDerivate(screen, t);
-		SDL_RenderPresent(screen.render);
+        double t = info.getTimer().get_ticks() / 10000.0;
+		screen->startDraw();
+		SDL_SetRenderDrawColor(screen->getRenderer(), 255, 255, 255, 255);
+		SDL_RenderClear(screen->getRenderer());
+		SDL_SetRenderDrawColor(screen->getRenderer(), 0, 0, 255, 255);
+		lissajousPlot.plot(*screen, -boost::math::constants::pi<double>(), boost::math::constants::pi<double>(), 5);
+		lissajousPlot.showDerivate(*screen, t);
+		screen->renderPresent();
         SDL_Delay(fmax(0, (1000 / 30) - fps.get_ticks()));
 	}
-	std::cout << " ? ? ? " << std::endl;
 }
