@@ -18,8 +18,9 @@ int     main(int argc, char **argv)
     desc.add_options()
     ("help", "describe arguments")
     ("BCurve", "Launch to see Bezier curve algorithm")
+    ("LCurve", "Launch to see Lissajous curve")
     ("BCurveGFX", "Launch to see Bezier curve algorithm with GFX")
-    ("LCurve", "Launch to see Lissajous curve");
+    ("Polygone", "Launch to see Polygone");
     po::variables_map vm;
     try {
         po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -40,6 +41,8 @@ int     main(int argc, char **argv)
     	bezierCurveLoopGFX();
     } else if (vm.count("LCurve")) {
 		lissajousCurveLoop();
+	} else if (vm.count("Polygone")) {
+		polygoneLoop();
 	}
 
 

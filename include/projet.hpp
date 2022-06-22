@@ -5,6 +5,7 @@
 # include <SDL2/SDL.h>
 # include <SDL2/SDL_timer.h>
 # include <vector>
+# include <functional>
 # include "draw.hpp"
 # include "timer.hpp"
 # include "point.hpp"
@@ -14,6 +15,9 @@
 void    bezierCurveLoop();
 void    bezierCurveLoopGFX();
 void    lissajousCurveLoop();
+void    polygoneLoop();
+bool	handleEvent(Timer& timer, std::function<void(Screen& screen)> f1, std::function<void(Screen& screen)> f2, Screen& screen);
+void	noneFunction(Screen& screen);
 
 std::vector<Point<double>>  generateBezierPoints(Point<double> p1, Point<double> p2, int n, double y_min = -1, double y_max = 1);
 std::vector<Point<double>>  generateNextPoints(std::vector<Point<double>> p, double t);
