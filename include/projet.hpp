@@ -29,6 +29,9 @@ class Info {
 		VirtualScreen				*screen;
 		Timer						timer;
 		bool						show;
+		int							mouse_x;
+		int							mouse_y;
+		bool						mooseMooved;
 };
 
 void    bezierCurveLoop();
