@@ -21,7 +21,12 @@ class Info {
 		void			selectScreen(int index);
 		Timer			&getTimer();
 		void			hideOrShowAlgo(bool show_);
+		void			setMouseInfo(int x, int y, bool m);
 		bool			showAlgo() const;
+		int				getMouseX() const;
+		int				getMouseY() const;
+		int				getHighDPI() const;
+		bool			getMouseMooved() const;
 
 	private:
 		Screen  					S;
@@ -31,7 +36,7 @@ class Info {
 		bool						show;
 		int							mouse_x;
 		int							mouse_y;
-		bool						mooseMooved;
+		bool						mouseMooved;
 };
 
 void    bezierCurveLoop();

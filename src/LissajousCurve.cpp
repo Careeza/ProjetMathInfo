@@ -4,6 +4,7 @@
 #include "polynome.hpp"
 #include "mathBonus.hpp"
 #include "screen.hpp"
+#include "index.hpp"
 #include "parametricPlot.hpp"
 #include <iostream>
 #include <vector>
@@ -37,6 +38,9 @@ void    lissajousCurveLoop() {
         SDL_SetRenderDrawColor(screen->getRenderer(), 0, 0, 255, 255);
         lissajousPlot.plot(*screen, -boost::math::constants::pi<double>(), boost::math::constants::pi<double>(), 5);
         lissajousPlot.showDerivate(*screen, t);
+		if (info.getMouseMooved()) {
+			drawIndex(info, 5);
+		}
         screen->renderPresent();
         SDL_Delay(fmax(0, (1000 / 30) - fps.get_ticks()));
     }

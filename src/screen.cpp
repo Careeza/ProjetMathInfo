@@ -2,6 +2,9 @@
 #include <vector>
 
 Screen::Screen(bool fullScreen) {
+	int w;
+	int h;
+
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
 	if (fullScreen) {
 		window = SDL_CreateWindow("Bezier", 0, 0, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_ALLOW_HIGHDPI);
@@ -11,10 +14,9 @@ Screen::Screen(bool fullScreen) {
 	render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
 	SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
 	SDL_GL_GetDrawableSize(window, &window_w, &window_h);
+	SDL_GetWindowSize(window, &w, &h);
+	highDPI = window_w / w;
 	ratio = window_w / static_cast<double>(window_h);
-}
-
-Screen::Screen(const Screen &screen) : window(screen.window), render(screen.render), window_w(screen.window_w), window_h(screen.window_h), ratio(screen.ratio) {
 }
 
 Screen::~Screen() {
@@ -36,6 +38,10 @@ double			Screen::getRatio() const {
 
 SDL_Renderer	*Screen::getRenderer() const {
 	return (render);
+}
+
+int				Screen::getHighDPI() const {
+	return (highDPI);
 }
 
 VirtualScreen::VirtualScreen(const Screen &screen, Flag flag) : S(screen) {

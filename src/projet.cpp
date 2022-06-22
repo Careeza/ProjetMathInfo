@@ -1,18 +1,19 @@
 #include "projet.hpp"
-#include <boost/program_options/options_description.hpp>
-#include <boost/program_options/positional_options.hpp>
-#include <boost/program_options/parsers.hpp>
-#include <boost/program_options/variables_map.hpp>
-#include <boost/program_options/cmdline.hpp>
-#include <boost/program_options/errors.hpp>
-#include <boost/program_options/option.hpp>
-#include <boost/program_options/value_semantic.hpp>
-#include <boost/program_options/version.hpp>
+#include "index.hpp"
+#include "mathBonus.hpp"
 #include <boost/program_options.hpp>
+#include <boost/math/constants/constants.hpp>
+#include <SDL2/SDL_ttf.h>
+#include <functional>
 
 namespace po = boost::program_options;
+TTF_Font *my_font = NULL;
 
-Info::Info(bool fullScreen) : S(fullScreen), show(true) {}
+
+Info::Info(bool fullScreen) : S(fullScreen), show(true) {
+	TTF_Init();
+	my_font = TTF_OpenFont("ressource/Keyboard.ttf", 20);
+}
 
 Info::~Info() {}
 
@@ -37,11 +38,31 @@ void			Info::hideOrShowAlgo(bool show_) {
     show = show_;
 }
 
+void			Info::setMouseInfo(int x, int y, bool m) {
+	mouse_x = x;
+	mouse_y = y;
+	mouseMooved = m;
+}
 
 bool			Info::showAlgo() const {
     return (show);
 }
 
+int				Info::getHighDPI() const {
+	return (S.getHighDPI());
+}
+
+int				Info::getMouseX() const {
+	return (mouse_x);
+}
+
+int				Info::getMouseY() const {
+	return (mouse_y);
+}
+
+bool			Info::getMouseMooved() const {
+	return (mouseMooved);
+}
 
 int     main(int argc, char **argv)
 {
@@ -65,6 +86,8 @@ int     main(int argc, char **argv)
         std::cerr << desc << "\n";
         return 1;
     }
+
+	// my_font = TTF_OpenFont("ressource/Keyboard.ttf", 20);
 
     if (vm.count("BCurve")) {
     	bezierCurveLoop();

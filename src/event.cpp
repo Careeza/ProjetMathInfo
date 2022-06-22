@@ -5,9 +5,14 @@
 
 bool	handleEvent(std::function<void(Info& info)> f1, std::function<void(Info& info)> f2, Info& info)
 {
+	int			x;
+	int			y;
+	// int			button;
 	bool		close_requested = false;
 	SDL_Event	event;
 
+	SDL_GetMouseState(&x, &y);
+	info.setMouseInfo(x * info.getHighDPI(), y * info.getHighDPI(), true);
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
@@ -37,6 +42,12 @@ bool	handleEvent(std::function<void(Info& info)> f1, std::function<void(Info& in
 					default:
 						break;
 				}
+				break;
+			case SDL_MOUSEMOTION:
+				SDL_GetMouseState(&x, &y);
+				info.setMouseInfo(x * info.getHighDPI(), y * info.getHighDPI(), true);
+				break;
+			default:
 				break;
 		}
 	}
