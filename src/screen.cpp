@@ -85,6 +85,14 @@ Point<int>	VirtualScreen::convPoint(Point<double> p) {
 	return (p_);
 }
 
+Point<double>	VirtualScreen::convPoint(Point<int> p) {
+	double	ratioX = p.getX() / static_cast<double>(virtualRect.w);
+	double	ratioY = p.getY() / static_cast<double>(virtualRect.h);
+	Point<double> p_(ratioX * static_cast<double>(planW) + static_cast<double>(planUL.getX()),
+				ratioY * static_cast<double>(planH) - static_cast<double>(planUL.getY()));
+	return (p_);
+}
+
 SDL_Point	VirtualScreen::convPointSDL(Point<double> p) {
 	double	ratioX = (p.getX() - planUL.getX()) / planW;
 	double	ratioY = -(p.getY() - planUL.getY()) / planH;

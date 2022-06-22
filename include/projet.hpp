@@ -41,7 +41,7 @@ class Info {
 
 void    bezierCurveLoop();
 void    bezierCurveLoopGFX();
-void    lissajousCurveLoop();
+void    lissajousCurveLoop(int m, int n);
 void    polygoneLoop();
 bool	handleEvent(std::function<void(Info& info)> f1, std::function<void(Info& info)> f2, Info& info);
 void	noneFunction(Info& info);

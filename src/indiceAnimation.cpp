@@ -10,17 +10,13 @@
 #include <vector>
 #include <boost/math/constants/constants.hpp>
 
-void    lissajousCurveLoop(int m, int n) {
-    Info            info;
+void    indiceAnimationLoop(Info& info, std::function<double(double)> xt, std::function<double(double)> yt, Point<double> p) {
     VirtualScreen   *screen;
-	std::function<double(double)> xt = [m](double x) {return (sin(x * m * 2 * boost::math::constants::pi<double>()));};
-	std::function<double(double)> yt = [n](double x) {return (cos(x * n * 2 * boost::math::constants::pi<double>()));};
     info.addVirtualScreen(Flag::full);
     screen = info.getCurrentScreen();
-    screen->createPlan({-1.4 * screen->getRatio(), 1.4}, {1.4 * screen->getRatio(), -1.4});
 
     Timer   fps;
-	PPlot	lissajousPlot(xt, yt);
+	PPlot	parametricPlot(xt, yt);
 
     info.getTimer().start();
 	while (handleEvent(noneFunction, noneFunction, info))
@@ -32,8 +28,7 @@ void    lissajousCurveLoop(int m, int n) {
         SDL_SetRenderDrawColor(screen->getRenderer(), 255, 255, 255, 255);
         SDL_RenderClear(screen->getRenderer());
         SDL_SetRenderDrawColor(screen->getRenderer(), 0, 0, 255, 255);
-        lissajousPlot.plot(*screen, 0, 1, 5);
-        lissajousPlot.showDerivate(*screen, t);
+        parametricPlot.plot(*screen, 0, 1, 5);
 		int index = calcIndex(xt, yt, screen->convPoint(Point<int>{info.getMouseX(), info.getMouseY()}));
 		if (info.getMouseMooved()) {
 			drawIndex(info, index);

@@ -12,7 +12,8 @@ TTF_Font *my_font = NULL;
 
 Info::Info(bool fullScreen) : S(fullScreen), show(true) {
 	TTF_Init();
-	my_font = TTF_OpenFont("ressource/Keyboard.ttf", 20);
+	my_font = TTF_OpenFont("ressource/HelveticaNeue.ttc", 35);
+	setMouseInfo(0, 0, false);
 }
 
 Info::~Info() {}
@@ -86,19 +87,14 @@ int     main(int argc, char **argv)
         std::cerr << desc << "\n";
         return 1;
     }
-
-	// my_font = TTF_OpenFont("ressource/Keyboard.ttf", 20);
-
     if (vm.count("BCurve")) {
     	bezierCurveLoop();
     } else if (vm.count("BCurveGFX")) {
     	bezierCurveLoopGFX();
     } else if (vm.count("LCurve")) {
-		lissajousCurveLoop();
+		lissajousCurveLoop(2, 3);
 	} else if (vm.count("Polygone")) {
 		polygoneLoop();
 	}
-
-
     return (0);
 }
