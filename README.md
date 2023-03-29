@@ -1,2 +1,2 @@
 # ProjetMathInfo
-Projet de math info sur les labyrinthes
+Projet de mathématiques et d'informatique sur l'indice en mathématiques.
