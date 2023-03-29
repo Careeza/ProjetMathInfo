@@ -9,10 +9,11 @@ Screen::Screen(bool fullScreen) {
 	if (fullScreen) {
 		window = SDL_CreateWindow("Bezier", 0, 0, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_ALLOW_HIGHDPI);
 	} else {
-		window = SDL_CreateWindow("Ant", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_ALLOW_HIGHDPI);
+		window = SDL_CreateWindow("Bezier", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_ALLOW_HIGHDPI);
 	}
 	render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
-	SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
+	//no blend
+	SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_NONE);
 	SDL_GL_GetDrawableSize(window, &window_w, &window_h);
 	SDL_GetWindowSize(window, &w, &h);
 	highDPI = window_w / w;
@@ -44,8 +45,11 @@ int				Screen::getHighDPI() const {
 	return (highDPI);
 }
 
-VirtualScreen::VirtualScreen(const Screen &screen, Flag flag) : S(screen) {
+SDL_Window		*Screen::getWindow() const {
+	return (window);
+}
 
+VirtualScreen::VirtualScreen(const Screen &screen, Flag flag) : S(screen) {
 	virtualRect.x = 0;
 	virtualRect.y = 0;
 	virtualRect.w = S.window_w;
@@ -64,14 +68,14 @@ VirtualScreen::VirtualScreen(const Screen &screen, Flag flag) : S(screen) {
 	}
 	ratio = virtualRect.w / static_cast<double>(virtualRect.h);
 	texture = SDL_CreateTexture(S.render, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, virtualRect.w, virtualRect.h);
-
 }
 
 VirtualScreen::~VirtualScreen() {
-	SDL_DestroyTexture(texture);
+	// SDL_DestroyTexture(texture);
 }
 
 void	VirtualScreen::createPlan(Point<double> planUL, Point<double> planDR) {
+	/* Create a plan */
 	this->planUL = planUL;
 	this->planDR = planDR;
 	planW = abs(planUL.getX() - planDR.getX());
@@ -79,6 +83,7 @@ void	VirtualScreen::createPlan(Point<double> planUL, Point<double> planDR) {
 }
 
 Point<int>	VirtualScreen::convPoint(Point<double> p) {
+	/* Convert a point from the plan to the screen */
 	double	ratioX = (p.getX() - planUL.getX()) / planW;
 	double	ratioY = -(p.getY() - planUL.getY()) / planH;
 	Point<int> p_(ratioX * virtualRect.w, ratioY * virtualRect.h);
@@ -86,14 +91,17 @@ Point<int>	VirtualScreen::convPoint(Point<double> p) {
 }
 
 Point<double>	VirtualScreen::convPoint(Point<int> p) {
+	/* Convert a point from the screen to the plan */
 	double	ratioX = p.getX() / static_cast<double>(virtualRect.w);
 	double	ratioY = p.getY() / static_cast<double>(virtualRect.h);
-	Point<double> p_(ratioX * static_cast<double>(planW) + static_cast<double>(planUL.getX()),
-				ratioY * static_cast<double>(planH) - static_cast<double>(planUL.getY()));
+	Point<double> p_(ratioX * planW + planUL.getX(), -ratioY * planH + planUL.getY());
+	// Point<double> p_(ratioX * static_cast<double>(planW) + static_cast<double>(planUL.getX()),
+	// 			ratioY * static_cast<double>(planH) - static_cast<double>(planUL.getY()));
 	return (p_);
 }
 
 SDL_Point	VirtualScreen::convPointSDL(Point<double> p) {
+	/* Convert a point from the plan to the screen */
 	double	ratioX = (p.getX() - planUL.getX()) / planW;
 	double	ratioY = -(p.getY() - planUL.getY()) / planH;
 	SDL_Point p_ = {static_cast<int>(ratioX * virtualRect.w), static_cast<int>(ratioY * virtualRect.h)};
@@ -101,15 +109,16 @@ SDL_Point	VirtualScreen::convPointSDL(Point<double> p) {
 }
 
 void		VirtualScreen::startDraw() {
+	/* Start drawing on the virtual screen */
 	SDL_SetRenderTarget(S.render, texture);
+	SDL_SetRenderDrawColor(S.render, 255, 255, 255, 255);
+	SDL_RenderClear(S.render);
 }
 
-void		VirtualScreen::renderPresent() {
+void		VirtualScreen::finishDraw() {
+	/* Present the virtual screen on the screen */
 	SDL_SetRenderTarget(S.render, NULL);
-	SDL_SetRenderDrawColor(S.render, 0, 0, 0, 255);
-	SDL_RenderClear(S.render);
 	SDL_RenderCopy(S.render, texture, NULL, &virtualRect);
-	SDL_RenderPresent(S.render);
 }
 
 int			VirtualScreen::getVirtualW() const {

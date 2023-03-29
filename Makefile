@@ -1,6 +1,6 @@
 CC = g++
-CFLAGS = -Wall -Wextra -Iinclude -IboostInc -std=c++17 -g -fsanitize=address
-LDFLAGS = `sdl2-config --libs --cflags` -Ofast -lSDL2_ttf -lm -LboostLib -lboost_program_options
+CFLAGS = -Wall -Wextra -Iinclude -ISDL_GFX_include -IboostInc -std=c++17 `pkg-config --cflags opencv4` -Ofast
+LDFLAGS = `sdl2-config --libs --cflags` `pkg-config --libs opencv4` -Ofast -lSDL2_ttf -lm -LboostLib -lboost_program_options -lSDL2_image
 
 BUILD_DIR = build
 OBJS_DIR = $(BUILD_DIR)/objs

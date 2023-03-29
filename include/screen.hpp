@@ -34,6 +34,7 @@ class  Screen {
 		int				getWindowH() const;
 		int				getHighDPI() const;
 		SDL_Renderer	*getRenderer() const;
+		SDL_Window		*getWindow() const;
 };
 
 
@@ -47,7 +48,7 @@ class VirtualScreen {
 		SDL_Point		convPointSDL(Point<double> p);
 
 		void		startDraw();
-		void		renderPresent();
+		void		finishDraw();
 
 		int			getVirtualW() const;
 		int			getVirtualH() const;

@@ -36,6 +36,7 @@ Poly::~Poly() {
 }
 
 Poly	puissance(const Poly& p, const int& n) {
+	/* Return the polynomial p^n */
 	if (n == 0)
 		return (Poly{{1}});
 	Poly	p2;
@@ -48,6 +49,7 @@ Poly	puissance(const Poly& p, const int& n) {
 
 Poly	Poly::operator*(const double& a) const 
 {
+	/* Return the polynomial p * a */
 	Poly	p;
 	
 	p.coefs_ = this->coefs_;
@@ -58,6 +60,7 @@ Poly	Poly::operator*(const double& a) const
 }
 
 Poly	Poly::operator*(const Poly& p) const {
+	/* Return the polynomial p * p */
 	Poly	p2(p.coefs_.size() + this->coefs_.size(), 0.0);
 
 	for (size_t i = 0; i < this->coefs_.size(); i++) {
@@ -70,6 +73,7 @@ Poly	Poly::operator*(const Poly& p) const {
 
 Poly	Poly::operator+(const double& a) const 
 {
+	/* Return the polynomial p + a */
 	Poly	p;
 	
 	p.coefs_ = this->coefs_;
@@ -78,6 +82,7 @@ Poly	Poly::operator+(const double& a) const
 }
 
 Poly	Poly::operator+(const Poly& p) const {
+	/* Return the polynomial p + p */
 	Poly	p2(std::max(p.coefs_.size(), this->coefs_.size()), 0.0);
 	size_t	i = 0;
 
@@ -97,6 +102,7 @@ Poly	Poly::operator+(const Poly& p) const {
 }
 
 double	Poly::operator()(double x) const {
+	/* Return the value of the polynomial at x */
 	double res = 0;
 
 	for (size_t i = 0; i < coefs_.size(); i++) {
@@ -119,6 +125,7 @@ std::ostream& operator<<(std::ostream &os, const Poly &p)
 
 std::tuple<Poly, Poly>	BezierPoly(std::vector<Point<double>> points)
 {
+	/* Return the Bezier polynomial of the points */
 	Poly	px;
 	Poly	py;
 	size_t	n = points.size();

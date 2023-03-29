@@ -3,16 +3,18 @@
 #include "projet.hpp"
 #include "timer.hpp"
 
-bool	handleEvent(std::function<void(Info& info)> f1, std::function<void(Info& info)> f2, Info& info)
+bool	handleEvent(std::function<void(Info& info)> f1, std::function<void(Info& info)> f2, std::function<void(Info& info)> f3, Info& info)
 {
+	/* Handle the events*/
 	int			x;
 	int			y;
-	// int			button;
+	int			button;
 	bool		close_requested = false;
 	SDL_Event	event;
 
 	SDL_GetMouseState(&x, &y);
 	info.setMouseInfo(x * info.getHighDPI(), y * info.getHighDPI(), true);
+	info.setClickInfo(x * info.getHighDPI(), y * info.getHighDPI(), false);
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
@@ -32,6 +34,15 @@ bool	handleEvent(std::function<void(Info& info)> f1, std::function<void(Info& in
 					case SDLK_b:
 						f2(info);
 						break;
+					case SDLK_c:
+						f3(info);
+						f3(info);
+						f3(info);
+						f3(info);
+						f3(info);
+						f3(info);
+						f3(info);
+						break;
 					case SDLK_SPACE:
 						if (!info.getTimer().is_paused()) {
 							info.getTimer().pause();
@@ -46,6 +57,10 @@ bool	handleEvent(std::function<void(Info& info)> f1, std::function<void(Info& in
 			case SDL_MOUSEMOTION:
 				SDL_GetMouseState(&x, &y);
 				info.setMouseInfo(x * info.getHighDPI(), y * info.getHighDPI(), true);
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+				button = SDL_GetMouseState(&x, &y);
+				info.setClickInfo(x * info.getHighDPI(), y * info.getHighDPI(), button);
 				break;
 			default:
 				break;

@@ -4,14 +4,21 @@
 
 # include "point.hpp"
 # include <vector>
+# include <functional>
 
 class Polygone {
 	public:
-		// Poly(std::vector<Point<double>>	points);
-		// ~Poly();
+		Polygone(std::vector<Point<double>>	points);
+		Polygone();
+		~Polygone();
+		
+		void	addPoint(Point<double> point);
+		bool	isClosed();
+
+		std::vector<Point<double>>	getPoints() const;
 	private:
 		std::vector<Point<double>>	points_;
-		// std::vector<Point<<double>>	rPoints_;
+		bool						closed_;
 };
 
 #endif

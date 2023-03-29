@@ -17,8 +17,8 @@ class Point {
         friend std::ostream& operator<<(std::ostream &os, const Point<int> &p);
         bool    operator<(const Point<T>& p) const;
         bool    operator>(const Point<T>& p) const;
-        T       getX() { return (x_); };
-        T       getY() { return (y_); };
+        T       getX() const { return (x_); } ;
+        T       getY() const { return (y_); };
 
     private:
         T x_;
